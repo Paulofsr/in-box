@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { searchMovies,
-} from '../actions'
+import { searchMovies, getMovie } from '../actions'
 
 class Movies extends Component {
   
@@ -37,9 +36,17 @@ class Movies extends Component {
       this.clearList();
       searchMovies(this.props.searchParmeter, this.props.yearParameter)
         .then(Response => {
-          this.setState({
-            list: Response.data
-          });
+          const update = Response.data.Search.map((item) => {
+            return getMovie(item.imdbID)
+              .then(ResponseMovie => {
+                item["imdbRating"] = ResponseMovie.data.imdbRating;
+              });
+          })
+          Promise.all(update).then(() => {
+            this.setState({
+              list: Response.data
+            });
+          })
         });
     }
   }
@@ -76,7 +83,7 @@ class Movies extends Component {
                           </div>
                           <div className="card-box">
                               <h4 className="card-title mbr-fonts-style display-7">
-                                  {item.Title} - <small>{item.Year}</small>
+                                  {item.Title} - <small>{item.Year} [{item.imdbRating}]</small>
                               </h4>
                           </div>
                           <div className="mbr-section-btn text-center">
@@ -103,7 +110,8 @@ const mapStateToProps = store => ({
 
 
 const mapDispatchToProps = dispatch => ({
-  searchMovies: bindActionCreators({ searchMovies }, dispatch)
+  searchMovies: bindActionCreators({ searchMovies }, dispatch),
+  getMovie: bindActionCreators({ getMovie }, dispatch)
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Movies));
