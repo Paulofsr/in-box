@@ -19,6 +19,7 @@ You will also see any lint errors in the console.
 
 In the root page it show a form with two field: 
 > Title [Required]
+
 > Year
 
 When execute the "Search" this action get on [OMDb API](http://www.omdbapi.com/) the list movies by Title and Year informed.
