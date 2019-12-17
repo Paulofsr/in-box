@@ -24,6 +24,8 @@ In the root page it show a form with two field:
 
 When execute the "Search" this action get on [OMDb API](http://www.omdbapi.com/) the list movies by Title and Year informed.
 
+After search and It has a list result, it can use the order by options. By options Title or Rating, increasing and decreasing.
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.<br />
