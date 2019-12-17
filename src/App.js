@@ -13,7 +13,9 @@ import { Provider } from 'react-redux';
 class App extends Component {
   
   static propTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    newValue: PropTypes.string,
+    newYear: PropTypes.string
   }
 
   state = {
@@ -46,14 +48,18 @@ class App extends Component {
 
       return (
         <Provider store={this.props.store}>
-          <div className="App" style={{ paddingTop: '10px' }}>
+          <div className="App container" style={{ paddingTop: '10px' }}>
             <Switch>
-              <Route path="/info/:imdbID" component={Movie}  />
+              <Route path="/:imdbID" component={Movie}  />
               <Route path="/">
-                  <div className="container">
-                    <input onChange={this.inputChange} type='text' value={inputValue} placeholder="Title" />
-                    <input onChange={this.yearChange} type='text' value={yearValue} placeholder="Year" />
-                    <button onClick={() => clickButton(inputValue, yearValue)}>
+                  <div className="mb-4 form-inline d-flex justify-content-center">
+                    <div className="form-group mb-2">
+                      <input onChange={this.inputChange}  type='text' value={inputValue} placeholder="Title" onKeyPress={event => { if (event.key === 'Enter')clickButton(inputValue, yearValue)}} />
+                    </div>
+                    <div className="form-group mb-2">
+                      <input onChange={this.yearChange} type='text' value={yearValue} placeholder="Year" onKeyPress={event => { if (event.key === 'Enter')clickButton(inputValue, yearValue)}} />
+                    </div>
+                    <button  className="btn btn-primary mb-2" onClick={() => clickButton(inputValue, yearValue)}>
                       Search
                     </button>
                   </div>
@@ -74,8 +80,7 @@ const mapStateToProps = (store, ownProps) => ({
 });
 
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ clickButton }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ clickButton }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 

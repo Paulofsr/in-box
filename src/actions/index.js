@@ -28,3 +28,40 @@ export const clickButton = (title, year) => ({
     newValue: title,
     newYear: year
 });
+
+
+export const Options = [
+  { value: 'TITLE_INCREASING', label: 'Title increasing' },
+  { value: 'TITLE_DECREASING', label: 'Title decreasing' },
+  { value: 'RATING_INCREASING', label: 'Rating increasing' },
+  { value: 'RATING_DECREASING', label: 'Rating decreasing' }
+];
+
+export const sortMovies = (type, list) => {
+    console.log(type);
+    switch(type){
+        case Options[0].value: 
+            list.Search.sort((a, b) => {
+                return a.Title > b.Title ? 1 : -1;
+            });
+            break;
+        case Options[1].value: 
+            list.Search.sort((a, b) => {
+                return a.Title > b.Title ? -1 : 1;
+            });
+            break;        
+        case Options[2].value: 
+            list.Search.sort((a, b) => {
+                return a.imdbRating > b.imdbRating ? 1 : -1;
+            });
+            break;
+        case Options[3].value: 
+            list.Search.sort((a, b) => {
+                return a.imdbRating > b.imdbRating ? -1 : 1;
+            });
+            break;
+        default:
+            return list;
+    }
+    return list;
+};
