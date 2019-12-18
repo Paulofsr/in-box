@@ -1,13 +1,9 @@
-FROM alpine
+FROM alpine:3.6
 
 RUN apk update && \
     apk add nodejs && \
     apk add nodejs-npm && \
-    apk add mongodb && \
-    apk add --no-cache git && \
     mkdir /app && \
-    mkdir /data && \
-    mkdir /data/db && \
     npm install nodemon -g
 
 WORKDIR /app

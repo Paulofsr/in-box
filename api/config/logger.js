@@ -30,18 +30,6 @@ module.exports = function () {
             logger.info(args);
         },
 
-        debug: function (...args) {
-            logger.debug(args);
-        },
-
-        warn: function (...args) {
-            logger.warn(args);
-        },
-
-        error: function (...args) {
-            logger.error(args);
-        },
-
         configureFormat: function () {
             var self = this;
             logger.format = winston.format.combine(

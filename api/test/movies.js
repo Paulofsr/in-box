@@ -4,9 +4,9 @@ var chai = require('chai');
 var chaiSubset = require('chai-subset');
 chai.use(chaiSubset);
 var expect = chai.expect;
+var server = require('../server');
 
-describe('CPF controller', function() {
-    var server = require('../server');
+describe('IN-BOX Control', function() {
 
     before(function(){
     })
@@ -28,6 +28,17 @@ describe('CPF controller', function() {
                 });
         });
 
+        it('Should return a movies list when search with year.', function () {
+            return request(server)
+                .get('/v1/movies?title=Harry&year=2011')
+                .set('Accept', 'application/json')
+                .expect(200)
+                .then(r => {
+                    expect(r.body).to.have.property('Search');
+                    expect(r.body.Search.length).to.not.be.equal(0);
+                });
+        });
+
         it('Should return a movie.', function () {
             return request(server)
                 .get('/v1/movies/tt1201607')
@@ -36,6 +47,17 @@ describe('CPF controller', function() {
                 .then(r => {
                     expect(r.body).to.have.property('Title');
                     expect(r.body.Title).to.be.equal('Harry Potter and the Deathly Hallows: Part 2');
+                });
+        });
+
+        it('Should return an error when search without title.', function () {
+            return request(server)
+                .get('/v1/movies')
+                .set('Accept', 'application/json')
+                .expect(400)
+                .then(r => {
+                    expect(r.body).to.have.property('Error');
+                    expect(r.body.Error).to.be.equal('Title is required.');
                 });
         });
 
