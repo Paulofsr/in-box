@@ -8,11 +8,11 @@ RUN apk update && \
 
 WORKDIR /app
 
-COPY . .
+COPY ./api .
 
 RUN chmod +x start.sh && \ 
     npm install 
 
 EXPOSE 8000
 
-CMD ["./start.sh"]
+CMD ["./api/start.sh"]
