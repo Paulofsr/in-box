@@ -51,3 +51,11 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+
+## Docker
+
+### API web project
+
+The project is availabled in docker image. [in-box-web:v1.1](https://hub.docker.com/r/paulofsr/in-box-web:v1.1). The external port is `3000`.
+
+### `docker container run --name in-box-web -p [IP-OPTION]:3000 -d in-box-web`
